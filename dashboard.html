@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — HamaSiswa</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div class="mobile-topbar">
+  <button class="hamburger" id="hamburger">☰</button>
+  <div class="logo-icon" style="width:30px;height:30px;font-size:0.6rem;">HS</div>
+  <span class="logo-text">HamaSiswa</span>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo-icon">HS</div>
+    <span class="logo-text">HamaSiswa</span>
+  </div>
+  <nav class="sidebar-nav">
+    <p class="nav-label">Menu Utama</p>
+    <a href="dashboard.html" class="nav-item active"><span class="icon">⊞</span><span>Dashboard</span></a>
+    <a href="materi.html" class="nav-item"><span class="icon">📚</span><span>Materi</span></a>
+    <a href="quiz.html" class="nav-item"><span class="icon">📝</span><span>Quizz</span></a>
+    <a href="video.html" class="nav-item"><span class="icon">▶️</span><span>Video</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="index.html" class="nav-item logout" id="logoutBtn"><span class="icon">↪</span><span>Keluar</span></a>
+  </div>
+</aside>
+
+<main class="main-content">
+  <div class="greeting anim">
+    Halo, <span id="display-name">—</span> 👋
+    <small style="font-size:0.75rem;color:var(--text-muted);font-weight:400;display:block;margin-top:4px;font-family:var(--font-body);">
+      Absen: <span id="display-absen">—</span>
+    </small>
+  </div>
+
+  <div class="sec-head anim" style="margin-top:32px;"><h2>Info Kelas</h2></div>
+  <div class="anim" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;">
+    <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">
+      <strong style="color:var(--text);">HamaSiswa</strong> adalah platform e-learning untuk mengakses materi pembelajaran,
+      mengerjakan quiz, dan menonton video materi. Semester Genap 2025/2026 · Sistem Informasi Manajemen &amp; Komunikasi Kantor.
+    </p>
+  </div>
+
+  <div class="sec-head anim"><h2>Akses Cepat</h2></div>
+
+  <div class="dash-grid">
+    <a class="dash-card teal anim" href="materi.html">
+      <div class="dash-icon">📚</div>
+      <div class="dash-info">
+        <div class="dash-label">Pembelajaran</div>
+        <div class="dash-title">Materi</div>
+      </div>
+      <span class="dash-arrow">→</span>
+    </a>
+    <a class="dash-card blue anim" href="quiz.html">
+      <div class="dash-icon">📝</div>
+      <div class="dash-info">
+        <div class="dash-label">Uji Pemahaman</div>
+        <div class="dash-title">Quizz</div>
+      </div>
+      <span class="dash-arrow">→</span>
+    </a>
+    <a class="dash-card indigo anim" href="video.html">
+      <div class="dash-icon">▶️</div>
+      <div class="dash-info">
+        <div class="dash-label">Konten Video</div>
+        <div class="dash-title">Video</div>
+      </div>
+      <span class="dash-arrow">→</span>
+    </a>
+  </div>
+
+  <div class="sec-head anim" style="margin-top:32px;"><h2>Aktivitas Terakhir</h2></div>
+  <div class="activity-list" id="activityList">
+    <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:0.875rem;" id="activityEmpty">
+      Belum ada aktivitas. Mulai buka materi, quiz, atau video!
+    </div>
+  </div>
+</main>
+
+<script src="data.js"></script>
+<script>
+  // ngecek login
+  const user = JSON.parse(localStorage.getItem('hs_user') || 'null');
+  if (!user) window.location.href = 'index.html';
+  document.getElementById('display-name').textContent = user?.name || '—';
+  document.getElementById('display-absen').textContent = user?.absen || '—';
+
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    clearActivity();
+    localStorage.removeItem('hs_user');
+    window.location.href = 'index.html';
+  });
+
+  // anu
+  const ICONS = { materi: '📚', quiz: '📝', video: '▶️', slide: '🖥️' };
+
+  function renderActivity() {
+    const list = getActivity();
+    const container = document.getElementById('activityList');
+    const empty = document.getElementById('activityEmpty');
+
+    if (!list.length) {
+      empty.style.display = '';
+      return;
+    }
+    empty.style.display = 'none';
+
+    list.forEach(item => {
+      const icon = ICONS[item.type] || '📄';
+      const timeStr = relativeTime(item.ts);
+      const el = document.createElement('a');
+      el.className = 'activity-item anim';
+      el.href = item.href || '#';
+      el.innerHTML = `
+        <div class="activity-icon ${item.type}">${icon}</div>
+        <div class="activity-body">
+          <div class="activity-label">${item.label}</div>
+          <div class="activity-title">${item.title}</div>
+          <div class="activity-meta">${item.meta || ''}</div>
+        </div>
+        <div class="activity-right">
+          <span class="activity-time">${timeStr}</span>
+          <span class="activity-badge ${item.type}">${item.badge || item.type}</span>
+        </div>
+        <span class="activity-arrow">→</span>
+      `;
+      container.appendChild(el);
+    });
+  }
+
+  renderActivity();
+</script>
+</body>
+</html>

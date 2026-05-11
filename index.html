@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — HamaSiswa</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="login-body">
+
+  <div class="login-wrap">
+    <div class="login-brand">
+      <div class="brand-icon">HS</div>
+      <span class="brand-name">HamaSiswa</span>
+    </div>
+
+    <div class="login-container">
+      <h2>Selamat datang</h2>
+      <p class="login-sub">Masuk untuk mengakses materi &amp; quiz</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Nama</label>
+          <input type="text" id="username" placeholder="Masukkan nama Anda" required/>
+        </div>
+        <div class="form-group">
+          <label>No. Absen</label>
+          <input type="number" id="absen" placeholder="Nomor absen" required/>
+        </div>
+        <button type="submit" class="btn-login">Masuk →</button>
+      </form>
+    </div>
+
+    <p class="login-footer">HamaSiswa · 2025/2026 Semester Genap</p>
+  </div>
+
+  <script>
+    if (localStorage.getItem('hs_user')) {
+      window.location.href = 'dashboard.html';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('username').value.trim();
+      const absen = document.getElementById('absen').value.trim();
+      if (!name || !absen) return;
+      localStorage.setItem('hs_user', JSON.stringify({ name, absen }));
+      window.location.href = 'dashboard.html';
+    });
+  </script>
+</body>
+</html>

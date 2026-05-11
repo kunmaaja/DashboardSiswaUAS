@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Video — HamaSiswa</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div class="mobile-topbar">
+  <button class="hamburger" id="hamburger">☰</button>
+  <div class="logo-icon" style="width:30px;height:30px;font-size:0.6rem;">HS</div>
+  <span class="logo-text">HamaSiswa</span>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo-icon">HS</div>
+    <span class="logo-text">HamaSiswa</span>
+  </div>
+  <nav class="sidebar-nav">
+    <p class="nav-label">Menu Utama</p>
+    <a href="dashboard.html" class="nav-item"><span class="icon">⊞</span><span>Dashboard</span></a>
+    <a href="materi.html" class="nav-item"><span class="icon">📚</span><span>Materi</span></a>
+    <a href="quiz.html" class="nav-item"><span class="icon">📝</span><span>Quizz</span></a>
+    <a href="video.html" class="nav-item active"><span class="icon">▶️</span><span>Video</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="index.html" class="nav-item logout"><span class="icon">↪</span><span>Keluar</span></a>
+  </div>
+</aside>
+
+<main class="main-content">
+  <div class="greeting anim">Konten <span>Video</span>
+    <small style="font-size:0.75rem;color:var(--text-muted);font-weight:400;display:block;margin-top:4px;font-family:var(--font-body);">
+      Tonton dan pelajari materi lewat video
+    </small>
+  </div>
+
+  <div class="video-hero anim">
+    <div class="hero-icon">▶️</div>
+    <div class="hero-text">
+      <div class="hero-tag">Koleksi Video Pembelajaran</div>
+      <h1>Belajar Lebih Mudah dengan Video</h1>
+      <p>Akses video materi dari para pengajar terbaik. Tonton kapan saja, di mana saja.</p>
+    </div>
+  </div>
+
+  <div class="sec-head anim"><h2>Video Unggulan</h2></div>
+
+  <div class="featured-video anim">
+    <div class="featured-thumb">
+      <iframe src="https://www.youtube.com/embed/p3GkTO7t3rU?si=XPP1casVYsj8uyLW"
+        title="Featured Video" allowfullscreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+      </iframe>
+    </div>
+    <div class="featured-info">
+      <div class="featured-tag">⭐ Unggulan</div>
+      <div class="featured-title">Video Pengantar Pembelajaran Semester Genap</div>
+      <div class="featured-desc">Video pembuka yang menjelaskan garis besar materi semester ini termasuk SIM dan Komunikasi Kantor.</div>
+      <a href="https://www.youtube.com/watch?v=p3GkTO7t3rU" target="_blank" class="btn-watch">▶ Tonton Sekarang</a>
+    </div>
+  </div>
+
+  <div class="sec-head anim"><h2>Semua Video</h2></div>
+
+  <div class="filter-bar anim">
+    <button class="filter-btn active" onclick="filterVideo(this,'all')">Semua</button>
+    <button class="filter-btn" onclick="filterVideo(this,'materi1')">Metodologi</button>
+    <button class="filter-btn" onclick="filterVideo(this,'materi2')">Materi 2</button>
+    <button class="filter-btn" onclick="filterVideo(this,'materi3')">Materi 3</button>
+    <button class="filter-btn" onclick="filterVideo(this,'materi4')">Materi 4</button>
+  </div>
+
+  <div class="video-grid" id="videoGrid">
+
+    <a class="video-card anim" href="https://www.youtube.com/watch?v=p3GkTO7t3rU" target="_blank" data-cat="materi1">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/p3GkTO7t3rU" title="Video 1" allowfullscreen></iframe>
+        <div class="thumb-overlay"><div class="play-btn">▶</div></div>
+        <span class="thumb-cat teal">Metodologi</span>
+      </div>
+      <div class="video-info">
+        <div class="video-subject">CS101 · Pertemuan 1</div>
+        <div class="video-title">Pengenalan Dasar Riset &amp; Metodologi Penelitian</div>
+        <div class="video-desc">Membahas paradigma penelitian, etika ilmiah, dan langkah-langkah dasar dalam menyusun riset yang valid.</div>
+        <div class="video-footer">
+          <div class="presenter-avatar teal">YA</div>
+          <span class="presenter-name">Yht. Amba</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="video-card anim" href="https://www.youtube.com/watch?v=p3GkTO7t3rU" target="_blank" data-cat="materi1">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/p3GkTO7t3rU" title="Video 2" allowfullscreen></iframe>
+        <div class="thumb-overlay"><div class="play-btn">▶</div></div>
+        <span class="thumb-cat teal">Metodologi</span>
+      </div>
+      <div class="video-info">
+        <div class="video-subject">CS101 · Pertemuan 2</div>
+        <div class="video-title">Identifikasi Masalah &amp; Rumusan Penelitian</div>
+        <div class="video-desc">Cara menentukan topik penelitian yang relevan dan merumuskan pertanyaan riset yang baik.</div>
+        <div class="video-footer">
+          <div class="presenter-avatar teal">YA</div>
+          <span class="presenter-name">Yht. Amba</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="video-card anim" href="https://www.youtube.com/watch?v=p3GkTO7t3rU" target="_blank" data-cat="materi2">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/p3GkTO7t3rU" title="Video 3" allowfullscreen></iframe>
+        <div class="thumb-overlay"><div class="play-btn">▶</div></div>
+        <span class="thumb-cat blue">Materi 2</span>
+      </div>
+      <div class="video-info">
+        <div class="video-subject">CS102 · Pertemuan 1</div>
+        <div class="video-title">Konsep Dasar &amp; Teori Pendukung</div>
+        <div class="video-desc">Penjelasan lengkap teori-teori utama yang menjadi landasan pembelajaran semester ini.</div>
+        <div class="video-footer">
+          <div class="presenter-avatar blue">YR</div>
+          <span class="presenter-name">Yht. Rusdi</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="video-card anim" href="https://www.youtube.com/watch?v=p3GkTO7t3rU" target="_blank" data-cat="materi3">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/p3GkTO7t3rU" title="Video 4" allowfullscreen></iframe>
+        <div class="thumb-overlay"><div class="play-btn">▶</div></div>
+        <span class="thumb-cat indigo">Materi 3</span>
+      </div>
+      <div class="video-info">
+        <div class="video-subject">CS103 · Pertemuan 1</div>
+        <div class="video-title">Analisis Data &amp; Interpretasi Hasil</div>
+        <div class="video-desc">Teknik analisis data kualitatif dan kuantitatif serta cara membaca hasil penelitian secara kritis.</div>
+        <div class="video-footer">
+          <div class="presenter-avatar indigo">PJ</div>
+          <span class="presenter-name">Prof. Jokondo</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="video-card anim" href="https://www.youtube.com/watch?v=p3GkTO7t3rU" target="_blank" data-cat="materi4">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/p3GkTO7t3rU" title="Video 5" allowfullscreen></iframe>
+        <div class="thumb-overlay"><div class="play-btn">▶</div></div>
+        <span class="thumb-cat violet">Materi 4</span>
+      </div>
+      <div class="video-info">
+        <div class="video-subject">CS104 · Pertemuan 1</div>
+        <div class="video-title">Penerapan Konsep dalam Studi Kasus</div>
+        <div class="video-desc">Simulasi nyata penerapan materi melalui studi kasus dari berbagai instansi dan lembaga profesional.</div>
+        <div class="video-footer">
+          <div class="presenter-avatar violet">YK</div>
+          <span class="presenter-name">Yht. Kementu</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="video-card anim" href="https://www.youtube.com/watch?v=p3GkTO7t3rU" target="_blank" data-cat="materi2">
+      <div class="video-thumb">
+        <iframe src="https://www.youtube.com/embed/p3GkTO7t3rU" title="Video 6" allowfullscreen></iframe>
+        <div class="thumb-overlay"><div class="play-btn">▶</div></div>
+        <span class="thumb-cat blue">Materi 2</span>
+      </div>
+      <div class="video-info">
+        <div class="video-subject">CS102 · Pertemuan 2</div>
+        <div class="video-title">Diskusi &amp; Tanya Jawab Interaktif</div>
+        <div class="video-desc">Sesi diskusi dan tanya jawab bersama pengajar membahas permasalahan yang sering muncul di lapangan.</div>
+        <div class="video-footer">
+          <div class="presenter-avatar blue">YR</div>
+          <span class="presenter-name">Yht. Rusdi</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<script src="data.js"></script>
+<script>
+  if (!localStorage.getItem('hs_user')) window.location.href = 'index.html';
+
+  function filterVideo(btn, cat) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.video-card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+    });
+  }
+
+  document.querySelectorAll('.video-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const subject = card.querySelector('.video-subject')?.textContent || '';
+      const title = card.querySelector('.video-title')?.textContent || '';
+      const presenter = card.querySelector('.presenter-name')?.textContent || '';
+      trackActivity({
+        type: 'video',
+        label: `Video · ${subject}`,
+        title: title,
+        meta: presenter,
+        href: 'video.html',
+        badge: 'Video'
+      });
+    });
+  });
+</script>
+</body>
+</html>

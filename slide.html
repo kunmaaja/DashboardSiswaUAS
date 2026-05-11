@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Slide — HamaSiswa</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body style="display:block;">
+
+<div class="slide-page-wrap">
+  <div class="slide-topbar">
+    <button class="slide-back-btn" id="backBtn">← Kembali</button>
+    <div class="slide-topbar-title" id="topbarTitle">Memuat...</div>
+    <div class="slide-topbar-code" id="topbarCode">—</div>
+  </div>
+
+  <div class="slide-stage">
+    <div class="slide-dots" id="dots"></div>
+
+    <div class="slide-board">
+      <div class="slide-num" id="slideNum">1 / 8</div>
+      <div class="slide-content" id="slideContent"></div>
+    </div>
+
+    <div class="slide-nav">
+      <button class="nav-btn btn-prev" id="prevBtn" disabled>← Sebelumnya</button>
+      <button class="nav-btn btn-next" id="nextBtn">Selanjutnya →</button>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+if (!localStorage.getItem('hs_user')) window.location.href = 'index.html';
+
+let currentSlide = 0;
+let slides = [];
+let backUrl = 'materi.html';
+
+function renderSlide(data, idx) {
+  const n = idx + 1;
+  const badge = `<span class="slide-num-badge">${String(n).padStart(2,'0')}</span>`;
+
+  if (data.type === 'title') {
+    const lines = data.main.map(l =>
+      l === data.accentWord ? `<span class="accent-word">${l}</span>` : l
+    ).join('<br>');
+    return `<div class="slide-item type-title" data-idx="${idx}">
+      <div class="slide-topic-tag">📚 ${data.tag}</div>
+      <div class="slide-main-title">${lines}</div>
+      <div class="slide-subtitle">${data.sub}</div>
+    </div>`;
+  }
+
+  if (data.type === 'close') {
+    return `<div class="slide-item type-close" data-idx="${idx}">
+      <div class="close-label">${data.label}</div>
+      <div class="close-title">${data.closeTitle}</div>
+      <div class="close-body">${data.body}</div>
+    </div>`;
+  }
+
+  if (data.type === 'list') {
+    const intro = data.intro ? `<p style="margin-bottom:14px;color:var(--text-muted)">${data.intro}</p>` : '';
+    const items = data.items.map(i => `<li>${i}</li>`).join('');
+    return `<div class="slide-item" data-idx="${idx}">
+      <h2>${badge} ${data.h2}</h2>
+      ${intro}<ul>${items}</ul>
+    </div>`;
+  }
+
+  if (data.type === 'text') {
+    const paras = data.paragraphs.map(p => `<p style="margin-bottom:12px;">${p}</p>`).join('');
+    return `<div class="slide-item" data-idx="${idx}">
+      <h2>${badge} ${data.h2}</h2>
+      ${paras}
+    </div>`;
+  }
+
+  if (data.type === 'compare') {
+    const leftItems = data.left.items.map(i => `<li>${i}</li>`).join('');
+    const rightItems = data.right.items.map(i => `<li>${i}</li>`).join('');
+    return `<div class="slide-item" data-idx="${idx}">
+      <h2>${badge} ${data.h2}</h2>
+      <div class="slide-compare">
+        <div class="compare-col col-lisan">
+          <div class="compare-col-title">${data.left.title}</div>
+          <ul>${leftItems}</ul>
+        </div>
+        <div class="compare-col col-tulis">
+          <div class="compare-col-title">${data.right.title}</div>
+          <ul>${rightItems}</ul>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  return `<div class="slide-item" data-idx="${idx}"><p>Slide tidak ditemukan.</p></div>`;
+}
+
+function buildDots() {
+  const el = document.getElementById('dots');
+  el.innerHTML = '';
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    el.appendChild(d);
+  });
+}
+
+function goTo(idx) {
+  document.querySelectorAll('.slide-item').forEach((el, i) => el.classList.toggle('active', i === idx));
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  currentSlide = idx;
+  document.getElementById('slideNum').textContent = `${idx + 1} / ${slides.length}`;
+  document.getElementById('prevBtn').disabled = (idx === 0);
+  const nextBtn = document.getElementById('nextBtn');
+  if (idx === slides.length - 1) {
+    nextBtn.textContent = 'Selesai ✓';
+    nextBtn.style.background = 'linear-gradient(135deg,#0f766e,#2dd4bf)';
+    nextBtn.style.boxShadow = '0 4px 16px rgba(45,212,191,0.35)';
+  } else {
+    nextBtn.textContent = 'Selanjutnya →';
+    nextBtn.style.background = 'linear-gradient(135deg,#3b82f6,#60a5fa)';
+    nextBtn.style.boxShadow = '0 4px 16px rgba(59,130,246,0.3)';
+  }
+}
+
+function init() {
+  const params = new URLSearchParams(window.location.search);
+  const topic = params.get('topic');
+  const data = MATERI[topic];
+  if (!data) {
+    document.getElementById('slideContent').innerHTML = '<p style="color:var(--text-muted)">Materi tidak ditemukan.</p>';
+    return;
+  }
+
+  backUrl = params.get('back') || 'materi.html';
+  slides = data.slides;
+
+  document.title = `${data.title} — HamaSiswa`;
+  document.getElementById('topbarTitle').textContent = data.title;
+  document.getElementById('topbarCode').textContent = data.code;
+
+  trackActivity({
+    type: 'materi',
+    label: `Materi · ${data.code}`,
+    title: data.title,
+    meta: `Slide ${data.slides.length} halaman`,
+    href: `slide.html?topic=${topic}`,
+    badge: 'Materi'
+  });
+
+  const content = document.getElementById('slideContent');
+  content.innerHTML = slides.map((s, i) => renderSlide(s, i)).join('');
+
+  buildDots();
+  goTo(0);
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentSlide < slides.length - 1) goTo(currentSlide + 1);
+    else window.location.href = backUrl;
+  });
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentSlide > 0) goTo(currentSlide - 1);
+  });
+  document.getElementById('backBtn').addEventListener('click', () => {
+    window.location.href = backUrl;
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (currentSlide < slides.length-1) goTo(currentSlide+1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (currentSlide > 0) goTo(currentSlide-1); }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
