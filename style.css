@@ -781,15 +781,31 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 28px;
 }
 
-.featured-thumb { position: relative; min-height: 240px; background: #0a0d1a; }
-.featured-thumb iframe { width: 100%; height: 100%; border: none; display: block; }
+.featured-thumb {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  background: #0a0d1a;
+}
+.featured-thumb iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+  display: block;
+}
 
-.featured-info { padding: 28px 26px; display: flex; flex-direction: column; gap: 12px; }
+.featured-info {
+  padding: 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 .featured-tag {
   display: inline-flex;
@@ -1290,8 +1306,7 @@ body.login-body {
 
 @media (max-width: 900px) {
   .dash-grid { grid-template-columns: 1fr 1fr; }
-  .featured-video { grid-template-columns: 1fr; }
-  .featured-thumb { min-height: 200px; }
+  .featured-thumb { padding-bottom: 56.25%; }
   .video-hero { padding: 22px; }
 }
 
@@ -1316,4 +1331,42 @@ body.login-body {
   .course-grid { grid-template-columns: repeat(2, 1fr); }
   .video-grid { grid-template-columns: 1fr; }
   .quiz-grid { grid-template-columns: 1fr; }
+}
+
+.btn-pin {
+  margin-left: auto;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-pin:hover {
+  background: rgba(45,212,191,0.08);
+  border-color: rgba(45,212,191,0.3);
+  color: var(--teal);
+}
+
+.video-card.is-featured {
+  border-color: rgba(45,212,191,0.3);
+  box-shadow: 0 0 0 1px rgba(45,212,191,0.12);
+}
+
+.video-card {
+  cursor: pointer;
+}
+
+.video-card .video-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
