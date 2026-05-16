@@ -54,12 +54,20 @@
 
   <div class="sec-head anim"><h2>Semua Video</h2></div>
 
-  <div class="filter-bar anim">
-    <button class="filter-btn active" onclick="filterVideo(this,'all')">Semua</button>
-    <button class="filter-btn" onclick="filterVideo(this,'materi1')">Metodologi</button>
-    <button class="filter-btn" onclick="filterVideo(this,'materi2')">Materi 2</button>
-    <button class="filter-btn" onclick="filterVideo(this,'materi3')">Materi 3</button>
-    <button class="filter-btn" onclick="filterVideo(this,'materi4')">Materi 4</button>
+  <div class="filter-bar anim" style="display:block;margin-bottom:20px;">
+    <div style="position:relative;">
+      <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:0.95rem;color:var(--text-dim);pointer-events:none;" id="searchIcon">🔍</span>
+      <input type="text" id="videoSearch"
+        style="width:100%;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:11px 44px 11px 42px;color:var(--text);font-size:0.875rem;font-family:var(--font-body);outline:none;transition:border-color 0.2s,box-shadow 0.2s;"
+        placeholder="Search"
+        autocomplete="off"
+        onfocus="this.style.borderColor='rgba(0,210,255,0.4)';this.style.boxShadow='0 0 0 3px rgba(0,210,255,0.07)'"
+        onblur="this.style.borderColor='';this.style.boxShadow=''"
+      />
+      <button id="searchClear"
+        style="display:none;position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.06);border:none;color:var(--text-muted);font-size:0.75rem;cursor:pointer;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;"
+        title="Hapus">✕</button>
+    </div>
   </div>
 
   <div class="video-grid" id="videoGrid">
@@ -72,7 +80,7 @@
       <div class="video-thumb">
         <iframe src="https://www.youtube.com/embed/i2-vdREljXE?si=iA1Uo-FkQP1jXzTD" title="Video 1" allowfullscreen></iframe>
         <div class="thumb-overlay"><div class="play-btn">▶</div></div>
-        <span class="thumb-cat teal">Metodologi</span>
+        <span class="thumb-cat teal"></span>
       </div>
       <div class="video-info">
         <div class="video-subject">CS101 · Pertemuan 1</div>
@@ -92,7 +100,7 @@
       <div class="video-thumb">
         <iframe src="https://www.youtube.com/embed/-kUopObHZrM?si=oHvQFnqABoOOCptw" title="Video 2" allowfullscreen></iframe>
         <div class="thumb-overlay"><div class="play-btn">▶</div></div>
-        <span class="thumb-cat teal">Metodologi</span>
+        <span class="thumb-cat teal"></span>
       </div>
       <div class="video-info">
         <div class="video-subject">CS101 · Pertemuan 2</div>
@@ -112,7 +120,7 @@
       <div class="video-thumb">
         <iframe src="https://www.youtube.com/embed/mclgL7cx7DA?si=Ld9FBuk68WwZQoKd" title="Video 3" allowfullscreen></iframe>
         <div class="thumb-overlay"><div class="play-btn">▶</div></div>
-        <span class="thumb-cat blue">Materi 2</span>
+        <span class="thumb-cat blue"></span>
       </div>
       <div class="video-info">
         <div class="video-subject">CS102 · Pertemuan 1</div>
@@ -132,32 +140,12 @@
       <div class="video-thumb">
         <iframe src="https://www.youtube.com/embed/B_Dx8rv8ixQ?si=-Z1VOkgsgQp13e9m" title="Video 4" allowfullscreen></iframe>
         <div class="thumb-overlay"><div class="play-btn">▶</div></div>
-        <span class="thumb-cat indigo">Materi 3</span>
+        <span class="thumb-cat indigo"></span>
       </div>
       <div class="video-info">
         <div class="video-subject">CS103 · Pertemuan 1</div>
         <div class="video-title">Analisis Data &amp; Interpretasi Hasil</div>
         <div class="video-desc">Teknik analisis data kualitatif dan kuantitatif serta cara membaca hasil penelitian secara kritis.</div>
-        <div class="video-footer">
-          <button class="btn-pin" title="Pilih Video Ini">☐ Pilih</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="video-card anim" data-cat="materi4"
-      data-vid="p3GkTO7t3rU?si=p3GkTO7t3rU"
-      data-subject="CS104 · Pertemuan 1"
-      data-title="RAHASIA BELAJAR"
-      data-desc="ssssstttt yang ytta aja.">
-      <div class="video-thumb">
-        <iframe src="https://www.youtube.com/embed/p3GkTO7t3rU?si=p3GkTO7t3rU" title="Video 5" allowfullscreen></iframe>
-        <div class="thumb-overlay"><div class="play-btn">▶</div></div>
-        <span class="thumb-cat violet">Materi 4</span>
-      </div>
-      <div class="video-info">
-        <div class="video-subject">CS104 · Pertemuan 1</div>
-        <div class="video-title">RAHASIA BELAJAR</div>
-        <div class="video-desc">ssssstttt yang ytta aja.</div>
         <div class="video-footer">
           <button class="btn-pin" title="Pilih Video Ini">☐ Pilih</button>
         </div>
@@ -185,6 +173,13 @@
     </div>
 
   </div>
+
+  <div id="searchEmpty" style="display:none;text-align:center;padding:48px 16px;">
+    <div style="font-size:2rem;margin-bottom:10px;opacity:0.4;">🔍</div>
+    <div style="font-family:var(--font-display);font-weight:700;color:var(--text);margin-bottom:4px;">Video tidak ditemukan</div>
+    <div style="font-size:0.82rem;color:var(--text-dim);">Coba kata kunci lain seperti nama materi atau kode pelajaran</div>
+  </div>
+
 </main>
 
 <script src="data.js"></script>
@@ -249,17 +244,35 @@
     });
   }
 
-  function filterVideo(btn, cat) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  const searchInput = document.getElementById('videoSearch');
+  const searchClear = document.getElementById('searchClear');
+  const searchEmpty = document.getElementById('searchEmpty');
+
+  function doSearch(query) {
+    const q = query.trim().toLowerCase();
+    let visibleCount = 0;
     document.querySelectorAll('.video-card').forEach(card => {
-      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+      const subject = (card.dataset.subject || '').toLowerCase();
+      const title = (card.dataset.title || '').toLowerCase();
+      const desc = (card.dataset.desc || '').toLowerCase();
+      const catLabel = card.querySelector('.thumb-cat')?.textContent.toLowerCase() || '';
+      const match = !q || subject.includes(q) || title.includes(q) || desc.includes(q) || catLabel.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) visibleCount++;
     });
+    searchEmpty.style.display = visibleCount === 0 ? 'block' : 'none';
+    searchClear.style.display = q.length > 0 ? 'flex' : 'none';
   }
+
+  searchInput.addEventListener('input', () => doSearch(searchInput.value));
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.focus();
+    doSearch('');
+  });
 
   document.querySelectorAll('.video-card').forEach(card => {
     const pinBtn = card.querySelector('.btn-pin');
-
 
     if (pinBtn) {
       pinBtn.addEventListener('click', function(e) {
@@ -267,7 +280,6 @@
         const saved = localStorage.getItem(FEATURED_KEY);
         const currentVid = card.dataset.vid;
         if (saved && JSON.parse(saved).vid === currentVid) {
-
           removeFeatured();
         } else {
           const data = {
@@ -299,12 +311,10 @@
         href: 'video.html',
         badge: 'Video'
       });
-
       window.open(`https://www.youtube.com/watch?v=${vid.split('?')[0]}`, '_blank');
     });
   });
 
-  // Init
   renderFeatured();
   const savedFeatured = localStorage.getItem(FEATURED_KEY);
   if (savedFeatured) {
