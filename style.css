@@ -455,6 +455,80 @@ body {
   flex-wrap: wrap;
 }
 
+/* Search bar — menggantikan filter chips di halaman video */
+.search-bar-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.search-bar-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--text-dim);
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.search-bar-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 44px 12px 44px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.search-bar-input::placeholder { color: var(--text-dim); }
+
+.search-bar-input:focus {
+  border-color: rgba(0,210,255,0.4);
+  box-shadow: 0 0 0 3px rgba(0,210,255,0.07);
+  background: var(--bg-card-hover);
+}
+
+.search-bar-wrap:focus-within .search-bar-icon {
+  color: var(--accent);
+}
+
+.search-bar-clear {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.06);
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.search-bar-clear:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+.search-bar-clear.visible { display: flex; }
+
+.search-empty {
+  text-align: center;
+  padding: 48px 16px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  display: none;
+}
+
+.search-empty-icon { font-size: 2rem; margin-bottom: 10px; opacity: 0.5; }
+.search-empty-msg { color: var(--text-dim); font-size: 0.82rem; margin-top: 4px; }
+
 .activity-list {
   display: flex;
   flex-direction: column;
