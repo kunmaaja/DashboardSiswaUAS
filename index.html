@@ -1,50 +1,109 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login — NEXASIM</title>
-  <link rel="stylesheet" href="style.css"/>
-</head>
-<body class="login-body">
-
-  <div class="login-wrap">
-    <div class="login-brand">
-      <div class="brand-icon">NS</div>
-      <span class="brand-name">NEXASIM</span>
-    </div>
-
-    <div class="login-container">
-      <h2>Selamat datang</h2>
-      <p class="login-sub">Masuk untuk mengakses materi &amp; quiz</p>
-
-      <form id="loginForm">
-        <div class="form-group">
-          <label>Nama</label>
-          <input type="text" id="username" placeholder="Masukkan nama Anda" required/>
-        </div>
-        <div class="form-group">
-          <label>No. Absen</label>
-          <input type="number" id="absen" placeholder="Nomor absen" required/>
-        </div>
-        <button type="submit" class="btn-login">Masuk →</button>
-      </form>
-    </div>
-
-    <p class="login-footer">NEXASIM · 2025/2026 Semester Genap</p>
-  </div>
-
-  <script>
-    if (localStorage.getItem('hs_user')) {
-      window.location.href = 'dashboard.html';
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HAMA — Portal Masuk</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Tambahan CSS untuk membuat form berada di tengah dengan background gambar */
+    #page-portal {
+      background: url('gambarduw.jpeg') no-repeat center center;
+      background-size: cover;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Menambahkan overlay gelap agar form putih lebih menonjol dan mudah dibaca */
+    #page-portal::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10, 30, 61, 0.65); 
+      z-index: 1;
     }
 
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    .portal-wrap {
+      position: relative;
+      z-index: 2;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .portal-form-side {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+      padding: 48px 40px;
+      background: var(--card);
+    }
+
+    /* Penyesuaian layout di dalam kotak form */
+    .brand-centered {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .brand-centered .portal-hero-logo {
+      margin: 0 auto 12px;
+      width: 52px; height: 52px; font-size: 26px;
+    }
+    .brand-centered h1 {
+      font-family: var(--serif);
+      font-size: 32px;
+      color: var(--fg);
+    }
+    .text-center {
+      text-align: center;
+      justify-content: center;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="page-portal">
+    <div class="portal-wrap">
+      
+      <div class="portal-form-side">
+        <div class="portal-form-inner">
+          <h2 class="page-title text-center">Selamat Datang</h2>
+          <p class="page-sub text-center" style="margin-bottom:36px; margin-left: auto; margin-right: auto;">
+            Masukkan data diri untuk mulai belajar.
+          </p>
+
+          <form id="portal-form">
+            <div class="form-group">
+              <label class="form-label" for="inp-name">Nama Lengkap</label>
+              <input class="form-input" id="inp-name" type="text" placeholder="Masukkan nama lengkap" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inp-absen">No. Absen</label>
+              <input class="form-input" id="inp-absen" type="number" placeholder="Masukkan no. absen" required />
+            </div>
+            <button type="submit" class="btn btn-dark" style="width:100%;justify-content:center;height:52px;font-size:14px;border-radius:12px;">
+              Masuk →
+            </button>
+          </form>
+          
+          <p class="portal-footer">Platform Pembelajaran Interaktif · HAMA</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  
+  <script src="data.js"></script>
+  <script>
+    document.getElementById('portal-form').addEventListener('submit', e => {
       e.preventDefault();
-      const name = document.getElementById('username').value.trim();
-      const absen = document.getElementById('absen').value.trim();
+      const name = document.getElementById('inp-name').value.trim();
+      const absen = document.getElementById('inp-absen').value.trim();
       if (!name || !absen) return;
-      localStorage.setItem('hs_user', JSON.stringify({ name, absen }));
+      localStorage.setItem('hamaUser', JSON.stringify({ name, absen }));
       window.location.href = 'dashboard.html';
     });
   </script>
