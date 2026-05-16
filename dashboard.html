@@ -1,157 +1,143 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HAMA — Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — NEXASIM</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="app-layout">
-    <nav class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <a class="topbar-brand" href="dashboard.html">
-          <div class="logo">H</div>
-          <div class="brand-text"><h2>HAMA</h2><p>Pembelajaran Interaktif</p></div>
-        </a>
-        <button class="sidebar-toggle" id="sidebar-toggle" title="Lipat/Buka Sidebar">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-      <p class="sidebar-label">Navigasi</p>
-      <a href="dashboard.html" class="nav-item active"><span class="nav-icon">🏠</span><span class="nav-label"> Home</span></a>
-      <a href="materi.html" class="nav-item"><span class="nav-icon">📖</span><span class="nav-label"> Materi</span></a>
-      <a href="video.html" class="nav-item"><span class="nav-icon">▶️</span><span class="nav-label"> Video</span></a>
-      <a href="latihan.html" class="nav-item"><span class="nav-icon">📋</span><span class="nav-label"> Latihan</span></a>
-    </nav>
 
-    <div class="main-wrapper">
-      <header class="topbar">
-        <div class="topbar-user">
-          <div class="user-chip"><div class="user-avatar">👤</div><span id="topbar-name">Siswa</span></div>
-          <button class="logout-btn" onclick="logout()">🚪</button>
-        </div>
-      </header>
+<div class="mobile-topbar">
+  <button class="hamburger" id="hamburger">☰</button>
+  <div class="logo-icon" style="width:30px;height:30px;font-size:0.6rem;">NS</div>
+  <span class="logo-text">NEXASIM</span>
+</div>
+<div class="overlay" id="overlay"></div>
 
-      <main class="main">
-        <div class="page" id="page-dashboard">
-          <div class="dash-welcome">
-            <div>
-              <p class="eyebrow">Dashboard</p>
-              <h1 class="page-title">Halo, <span id="dash-name">Siswa</span> 👋</h1>
-              <p style="color: #ffffff; font-size: 16px; margin-top: -10px; margin-bottom: 24px; font-weight: 500;">
-                No. Absen: <span id="dash-absen" style="color: #ffffff;">-</span>
-              </p>
-              <p class="page-sub">Selamat datang kembali. Pilih menu di bawah untuk melanjutkan belajar.</p>
-              <div class="dash-badge">✨ Semangat belajar hari ini!</div>
-            </div>
-          </div>
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo-icon">NS</div>
+    <span class="logo-text">NEXASIM</span>
+  </div>
+  <nav class="sidebar-nav">
+    <p class="nav-label">Menu Utama</p>
+    <a href="dashboard.html" class="nav-item active"><span class="icon">⊞</span><span>Dashboard</span></a>
+    <a href="materi.html" class="nav-item"><span class="icon">📚</span><span>Materi</span></a>
+    <a href="quiz.html" class="nav-item"><span class="icon">📝</span><span>Quizz</span></a>
+    <a href="video.html" class="nav-item"><span class="icon">▶️</span><span>Video</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="index.html" class="nav-item logout" id="logoutBtn"><span class="icon">↪</span><span>Keluar</span></a>
+  </div>
+</aside>
 
-          <div class="menu-list">
-            <a class="menu-card" href="materi.html">
-              <div class="menu-icon icon-materi">📖</div>
-              <div class="menu-info">
-                <h3>Materi</h3>
-                <p>Pelajari teori & konsep peralatan kantor secara lengkap</p>
-              </div>
-            </a>
-            <a class="menu-card" href="video.html">
-              <div class="menu-icon icon-video">▶️</div>
-              <div class="menu-info">
-                <h3>Video</h3>
-                <p>Tonton video tutorial & pembelajaran interaktif</p>
-              </div>
-            </a>
-            <a class="menu-card" href="latihan.html">
-              <div class="menu-icon icon-latihan">📋</div>
-              <div class="menu-info">
-                <h3>Latihan</h3>
-                <p>Uji pemahamanmu dengan soal latihan online</p>
-              </div>
-            </a>
-          </div>
-
-          <div class="kfooter">
-            <div class="kfooter-inner">
-              <div class="kfooter-icon">💡</div>
-              <div>
-                <p class="kfooter-lbl">Smart office, better productivity</p>
-                <p class="kfooter-fact" id="kfact"></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
+<main class="main-content">
+  <div class="greeting anim">
+    Halo, <span id="display-name">—</span> 👋
+    <small style="font-size:0.75rem;color:var(--text-muted);font-weight:400;display:block;margin-top:4px;font-family:var(--font-body);">
+      Absen: <span id="display-absen">—</span>
+    </small>
   </div>
 
-  <script src="data.js"></script>
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('sidebar-toggle');
-    const COLLAPSED_KEY = 'hamaSidebarCollapsed';
+  <div class="sec-head anim" style="margin-top:32px;"><h2>Info Kelas</h2></div>
+  <div class="anim" style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;">
+    <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.7;">
+      <strong style="color:var(--text);">HamaSiswa</strong> adalah platform e-learning untuk mengakses materi pembelajaran,
+      mengerjakan quiz, dan menonton video materi. Semester Genap 2025/2026 · Sistem Informasi Manajemen &amp; Komunikasi Kantor.
+    </p>
+  </div>
 
-    // Logika Auto-collapse saat layar kecil
-    function checkScreenSize() {
-      if (window.innerWidth <= 768) {
-        sidebar.classList.add('collapsed');
-      } else {
-        if (localStorage.getItem(COLLAPSED_KEY) === '1') {
-          sidebar.classList.add('collapsed');
-        } else {
-          sidebar.classList.remove('collapsed');
-        }
-      }
+  <div class="sec-head anim"><h2>Akses Cepat</h2></div>
+
+  <div class="dash-grid">
+    <a class="dash-card teal anim" href="materi.html">
+      <div class="dash-icon">📚</div>
+      <div class="dash-info">
+        <div class="dash-label">Pembelajaran</div>
+        <div class="dash-title">Materi</div>
+      </div>
+      <span class="dash-arrow">→</span>
+    </a>
+    <a class="dash-card blue anim" href="quiz.html">
+      <div class="dash-icon">📝</div>
+      <div class="dash-info">
+        <div class="dash-label">Uji Pemahaman</div>
+        <div class="dash-title">Quizz</div>
+      </div>
+      <span class="dash-arrow">→</span>
+    </a>
+    <a class="dash-card indigo anim" href="video.html">
+      <div class="dash-icon">▶️</div>
+      <div class="dash-info">
+        <div class="dash-label">Konten Video</div>
+        <div class="dash-title">Video</div>
+      </div>
+      <span class="dash-arrow">→</span>
+    </a>
+  </div>
+
+  <div class="sec-head anim" style="margin-top:32px;"><h2>Aktivitas Terakhir</h2></div>
+  <div class="activity-list" id="activityList">
+    <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:0.875rem;" id="activityEmpty">
+      Belum ada aktivitas. Mulai buka materi, quiz, atau video!
+    </div>
+  </div>
+</main>
+
+<script src="data.js"></script>
+<script>
+  // ngecek login
+  const user = JSON.parse(localStorage.getItem('hs_user') || 'null');
+  if (!user) window.location.href = 'index.html';
+  document.getElementById('display-name').textContent = user?.name || '—';
+  document.getElementById('display-absen').textContent = user?.absen || '—';
+
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    clearActivity();
+    localStorage.removeItem('hs_user');
+    window.location.href = 'index.html';
+  });
+
+  // anu
+  const ICONS = { materi: '📚', quiz: '📝', video: '▶️', slide: '🖥️' };
+
+  function renderActivity() {
+    const list = getActivity();
+    const container = document.getElementById('activityList');
+    const empty = document.getElementById('activityEmpty');
+
+    if (!list.length) {
+      empty.style.display = '';
+      return;
     }
+    empty.style.display = 'none';
 
-    window.addEventListener('resize', checkScreenSize);
-    checkScreenSize();
-
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-      if (window.innerWidth > 768) {
-        localStorage.setItem(COLLAPSED_KEY, sidebar.classList.contains('collapsed') ? '1' : '0');
-      }
+    list.forEach(item => {
+      const icon = ICONS[item.type] || '📄';
+      const timeStr = relativeTime(item.ts);
+      const el = document.createElement('a');
+      el.className = 'activity-item anim';
+      el.href = item.href || '#';
+      el.innerHTML = `
+        <div class="activity-icon ${item.type}">${icon}</div>
+        <div class="activity-body">
+          <div class="activity-label">${item.label}</div>
+          <div class="activity-title">${item.title}</div>
+          <div class="activity-meta">${item.meta || ''}</div>
+        </div>
+        <div class="activity-right">
+          <span class="activity-time">${timeStr}</span>
+          <span class="activity-badge ${item.type}">${item.badge || item.type}</span>
+        </div>
+        <span class="activity-arrow">→</span>
+      `;
+      container.appendChild(el);
     });
+  }
 
-    // Menampilkan Fakta Acak
-    if(typeof facts !== 'undefined') {
-      document.getElementById('kfact').textContent = facts[Math.floor(Math.random() * facts.length)];
-    }
-
-    // --- LOGIKA DATA PENGGUNA (Nama & Absen) ---
-    const savedUserStr = localStorage.getItem('hamaUser');
-    let userName = 'Siswa';
-    let userAbsen = '-';
-
-    // Ambil data dari localStorage (dari login/index.html) jika ada
-    if (savedUserStr) {
-      const savedUser = JSON.parse(savedUserStr);
-      userName = savedUser.name || 'Siswa';
-      userAbsen = savedUser.absen || '-';
-    } else if (typeof userData !== 'undefined' && userData) {
-      // Fallback menggunakan variabel userData dari data.js
-      userName = userData.name || 'Siswa';
-      userAbsen = userData.absen || '-';
-    }
-
-    // Tampilkan Nama di Dashboard
-    const dashNameEl = document.getElementById('dash-name');
-    if (dashNameEl) dashNameEl.textContent = userName;
-
-    // Tampilkan Absen di Dashboard
-    const dashAbsenEl = document.getElementById('dash-absen');
-    if (dashAbsenEl) dashAbsenEl.textContent = userAbsen;
-
-    // Tampilkan Nama di Topbar (Pojok Kanan Atas)
-    const topbarNameEl = document.getElementById('topbar-name');
-    if (topbarNameEl) topbarNameEl.textContent = userName;
-    
-    // Fungsi Logout (opsional, jika tombol logout di topbar diklik)
-    function logout() {
-      localStorage.removeItem('hamaUser');
-      window.location.href = 'index.html';
-    }
-  </script>
+  renderActivity();
+</script>
 </body>
 </html>
